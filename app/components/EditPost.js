@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useImmerReducer } from "use-immer";
 import Page from "./Page";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
 import LoadingDotsIcon from "./LoadingDotsIcon";
 import StateContext from "../StateContext";
@@ -10,6 +10,7 @@ import DispatchContext from "../DispatchContext";
 function EditPost() {
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
+  const navigate = useNavigate();
 
   const originalState = {
     title: {
@@ -85,6 +86,9 @@ function EditPost() {
           const response = await Axios.post(`/post/${state.id}/edit`, { title: state.title.value, body: state.body.value, token: appState.user.token }, { cancelToken: ourRequest.token });
           dispatch({ type: "saveRequestFinished" });
           appDispatch({ type: "flashMessage", value: "Post was updated." });
+          if (response.data === "success") {
+            navigate(`/post/${state.id}`);
+          }
         } catch (e) {
           console.log("There was a problem or the request was cancelled.");
         }
@@ -106,7 +110,7 @@ function EditPost() {
   return (
     <Page title="Edit Post">
       <Link className="small font-weight-bold" to={`/post/${state.id}`}>
-        &laquo; Back to post permalink{" "}
+        &laquo; Back to post{" "}
       </Link>
       <form onSubmit={submitHandler}>
         <div className="form-group">

@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DispatchContext from "../DispatchContext";
 import StateContext from "../StateContext";
 import ReactTooltip from "react-tooltip";
@@ -7,11 +7,12 @@ import ReactTooltip from "react-tooltip";
 function HeaderLoggedIn(props) {
   const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
+  const navigate = useNavigate();
 
   function handleLoggedOut() {
     appDispatch({ type: "logout" });
     appDispatch({ type: "flashMessage", value: "You have successfully logged out." });
-    window.open("/", "_self");
+    navigate("/");
   }
 
   function handleSearchIcon(e) {
