@@ -42,10 +42,6 @@ function Main() {
     unreadChatCount: 0,
   };
 
-  function addFlashMessages(msg) {
-    setFlashMessages((prev) => prev.concat(msg));
-  }
-
   function ourReducer(draft, action) {
     switch (action.type) {
       case "login":

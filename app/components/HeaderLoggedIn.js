@@ -11,6 +11,7 @@ function HeaderLoggedIn(props) {
   function handleLoggedOut() {
     appDispatch({ type: "logout" });
     appDispatch({ type: "flashMessage", value: "You have successfully logged out." });
+    window.open("/", "_self");
   }
 
   function handleSearchIcon(e) {
